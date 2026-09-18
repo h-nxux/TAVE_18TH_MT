@@ -1,0 +1,106 @@
+/* =========================================================
+   title.css
+   "title" 타입 슬라이드 (표지) 전용 스타일
+   ========================================================= */
+
+.s1-deco { position: absolute; inset: 0; }
+
+.s1-title {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5vh;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.s1-main {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16.5vh;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  -webkit-text-stroke: 0.07em #f4c94a;
+}
+
+/* 상단 장식 바 */
+.top-bar {
+  position: absolute;
+  top: 4.5%;
+  left: 0;
+  right: 0;
+  height: 6%;
+}
+.chevrons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 0.5vh;
+  filter: drop-shadow(0 0 6px rgba(255, 210, 110, 0.6));
+}
+.chevrons.left { left: 3%; }
+.chevrons.right { right: 3%; }
+.chevrons svg { width: 1.5vh; height: 2.4vh; }
+
+.top-trapezoid {
+  position: absolute;
+  top: -0.8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9%;
+  height: 2.2vh;
+  background: linear-gradient(90deg, #f6d67a, #fff3cf, #f6d67a);
+  clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+  opacity: 0.95;
+}
+
+.top-dots {
+  position: absolute;
+  top: 3.4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6vh;
+}
+.top-dots span {
+  width: 0.7vh;
+  height: 0.7vh;
+  border-radius: 50%;
+  background: #ffd977;
+  box-shadow: 0 0 6px rgba(255, 217, 119, 0.9);
+}
+
+.top-line {
+  position: absolute;
+  top: 2.9vh;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d9ae55 15%, #d9ae55 85%, transparent);
+}
+.top-line.left { left: 15%; width: 30%; transform: skewY(-1.2deg); }
+.top-line.right { right: 15%; width: 30%; transform: skewY(1.2deg); }
+
+/* 유성 */
+.shoot-star {
+  position: absolute;
+  top: 30%;
+  right: 6%;
+  width: 16%;
+  height: 6vh;
+}
+
+/* 하단 대각선 점선 */
+.bottom-stripe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8%;
+  height: 2.4vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.bottom-stripe svg { width: 100%; height: 100%; }

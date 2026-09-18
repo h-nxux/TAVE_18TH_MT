@@ -1,0 +1,237 @@
+/* =========================================================
+   base.css
+   공통 레이아웃 + 어디서나 재사용하는 "컴포넌트" 스타일 모음.
+   특정 슬라이드 전용 스타일은 css/slides/ 폴더에 따로 있음.
+   ========================================================= */
+
+@font-face {
+  font-family: 'PyeongChangPeace';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  font-family: 'PyeongChangPeace', sans-serif;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.slide-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 177.78vh; /* 16:9 고정 비율 (PPT 와이드스크린) */
+  max-height: 56.25vw;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../image/background.png');
+  background-size: cover;
+  background-position: center;
+  display: none;
+}
+
+.slide.active { display: block; }
+
+/* ---------- 좌우 이동 버튼 ---------- */
+.nav-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3.2vh;
+  height: 3.2vh;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 214, 102, 0.75);
+  background: rgba(4, 8, 24, 0.55);
+  color: #ffe6a3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  transition: background 0.2s, transform 0.2s, opacity 0.2s;
+  backdrop-filter: blur(2px);
+}
+.nav-btn:hover { background: rgba(255, 214, 102, 0.25); }
+.nav-btn:active { transform: translateY(-50%) scale(0.92); }
+.nav-btn.disabled { opacity: 0.25; pointer-events: none; }
+#prevBtn { left: 1.2vw; }
+#nextBtn { right: 1.2vw; }
+.nav-btn svg { width: 45%; height: 45%; }
+
+.slide-counter {
+  position: fixed;
+  bottom: 1.4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 230, 170, 0.65);
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 1.4vh;
+  letter-spacing: 0.1em;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* =========================================================
+   재사용 컴포넌트
+   ========================================================= */
+
+/* 금색 테두리 + 그라데이션 텍스트 (제목/로고에 사용) */
+.grad-outline {
+  font-family: 'PyeongChangPeace', sans-serif;
+  font-weight: 700;
+  background: linear-gradient(180deg, #8ef05a 0%, #cdf5a8 18%, #ffffff 42%, #ffffff 52%, #a8c3f2 68%, #5877cc 86%, #33499b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  display: inline-block;
+  filter:
+    drop-shadow(0 0 0.14em #f4c94a)
+    drop-shadow(0 0.05em 0 #1c2b6e)
+    drop-shadow(0 -0.02em 0.02em #1c2b6e);
+  -webkit-text-stroke: 0.055em #f4c94a;
+}
+
+/* 노치(모서리 잘린) 사각 패널 - 규칙 박스, 태그 등에 사용 */
+.panel {
+  border: 2px solid #e0b45c;
+  background: rgba(6, 10, 26, 0.62);
+}
+.notch-tl { clip-path: polygon(3vh 0, 100% 0, 100% 100%, 0 100%, 0 3vh); }
+.notch-br { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vh), calc(100% - 3vh) 100%, 0 100%); }
+.notch-tr { clip-path: polygon(0 0, calc(100% - 3vh) 0, 100% 3vh, 100% 100%, 0 100%); }
+
+/* 금색으로 꽉 찬 패널 (예: 노래 퀴즈 재생 버튼 박스) - .panel(어두운 배경)과 반대 톤 */
+.panel-gold {
+  background: linear-gradient(180deg, #ffe9a8, #d9a53f);
+  border: none;
+  color: #161608;
+}
+
+/* 흰색 말풍선 뱃지 - 게임 이름 표시 등에 사용 */
+.badge-bubble {
+  background: #fff;
+  color: var(--badge-color, #16247d);
+  font-weight: 700;
+  font-size: 2.4vh;
+  padding: 0.9vh 2vh;
+  border-radius: 0.8vh;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.badge-bubble::after {
+  content: "";
+  position: absolute;
+  left: 1.6vh;
+  bottom: -0.7vh;
+  width: 0;
+  height: 0;
+  border-left: 0.6vh solid transparent;
+  border-right: 0.6vh solid transparent;
+  border-top: 0.8vh solid #fff;
+}
+
+/* 퀴즈 코너 바로가기 버튼 (헤더의 뱃지 옆 아이콘) */
+.corner-jump-btn {
+  width: 3.4vh;
+  height: 3.4vh;
+  min-width: 22px;
+  min-height: 22px;
+  border-radius: 0.6vh;
+  border: 2px solid rgba(255, 214, 102, 0.75);
+  background: rgba(4, 8, 24, 0.55);
+  color: #ffe6a3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.corner-jump-btn:hover { background: rgba(255, 214, 102, 0.25); }
+.corner-jump-btn svg { width: 55%; height: 55%; }
+
+/* 코너 바로가기 드롭다운 메뉴 (화면에 하나만 존재, 버튼 클릭 위치 근처에 뜸) */
+.corner-menu {
+  display: none;
+  position: fixed;
+  z-index: 500;
+  min-width: 220px;
+  background: rgba(8, 12, 30, 0.97);
+  border: 2px solid #e0b45c;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+}
+.corner-menu.open { display: block; }
+.corner-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.corner-menu-item:hover:not(.is-disabled) { background: rgba(255, 214, 102, 0.18); }
+.corner-menu-item.is-disabled { color: rgba(255, 255, 255, 0.35); cursor: not-allowed; }
+.corner-menu-badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffd977;
+  border: 1px solid rgba(255, 214, 102, 0.5);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* 원형 뱃지 (예시/정답 표시 등에 사용) */
+.answer-circle {
+  width: 13vh;
+  height: 13vh;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe9a8, #d9a53f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6vh;
+  font-weight: 900;
+  color: #1a1a1a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}

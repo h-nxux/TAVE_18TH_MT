@@ -1,0 +1,99 @@
+/* =========================================================
+   quiz.css
+   "quiz-photo" / "quiz-answer" 타입 슬라이드 (인물 퀴즈 사진/정답 세트) 전용 스타일.
+   사진 세트를 계속 추가해도 이 파일은 그대로 재사용됨.
+   ========================================================= */
+
+.quiz-panel {
+  position: absolute;
+  top: 19%;
+  left: 4.5%;
+  right: 4.5%;
+  bottom: 5%;
+}
+
+.quiz-number {
+  position: absolute;
+  top: 2.6vh;
+  left: 3.2vh;
+  font-size: 2.6vh;
+  font-weight: 700;
+  color: #f2f2f2;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+}
+
+.quiz-photo-wrap {
+  /* 번호 영역(위쪽) 만큼만 비우고, 나머지 상자 안을 최대한 채움 */
+  position: absolute;
+  top: 6.5vh;
+  bottom: 1.6vh;
+  left: 1.6vh;
+  right: 1.6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-photo {
+  display: block;
+  height: 100%;      /* 상자 높이에 꽉 차도록 고정 (작은 사진도 확대됨) */
+  width: auto;        /* 가로는 사진 원본 비율에 맞춰 자동으로 늘어남 */
+  max-width: 100%;    /* 가로가 넘칠 정도로 긴(파노라마) 사진이면 가로 기준으로 축소 */
+  object-fit: contain;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.quiz-answer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 86%;
+  font-family: 'PyeongChangPeace', sans-serif;
+  font-weight: 700;
+  font-size: 9vh;
+  color: #dcb354;
+  text-shadow: 0 0.05em 0.05em rgba(0, 0, 0, 0.5);
+  text-align: center;
+  line-height: 1.25;
+  /* 인물 이름처럼 짧은 정답은 한 줄, "가수 - 제목"처럼 긴 정답은 자동으로 줄바꿈됨 */
+}
+
+/* ---- 노래 퀴즈: 1초/3초/5초 클립 재생 버튼 ---- */
+.song-clip-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 6vh;
+}
+
+.song-clip-btn {
+  width: 16vh;
+  height: 16vh;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, #ffe9a8, #d9a53f);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6vh;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.song-clip-btn:hover { transform: scale(1.04); }
+.song-clip-btn.is-playing {
+  box-shadow: 0 0 0 0.5vh rgba(255, 217, 119, 0.55), 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.song-clip-icon { width: 5.4vh; height: 5.4vh; }
+
+.song-clip-label {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 2.2vh;
+  font-weight: 800;
+  color: #161608;
+}

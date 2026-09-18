@@ -1,0 +1,99 @@
+/* =========================================================
+   draw-quiz.css
+   "button-menu" / "reveal-answer" 타입 슬라이드 전용 스타일.
+   이어그리기 퀴즈처럼 버튼을 눌러 메뉴 사이를 이동하는 페이지에서 재사용됨.
+   ========================================================= */
+
+/* 뒤로가기 버튼 (패널 오른쪽 위) */
+.menu-back-btn {
+  position: absolute;
+  top: 2.2vh;
+  right: 3vh;
+  display: flex;
+  align-items: center;
+  gap: 0.4vh;
+  padding: 0.9vh 1.6vh;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 214, 102, 0.75);
+  background: rgba(4, 8, 24, 0.55);
+  color: #ffe6a3;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 1.8vh;
+  font-weight: 700;
+  cursor: pointer;
+}
+.menu-back-btn:hover { background: rgba(255, 214, 102, 0.25); }
+.menu-back-btn svg { width: 1.6vh; height: 1.6vh; }
+
+/* 메뉴 버튼(노란 원) 줄 */
+.menu-circle-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4vh 5vh;
+}
+
+.menu-circle-btn {
+  width: 15vh;
+  height: 15vh;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, #ffe9a8, #d9a53f);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.4vh;
+  transition: transform 0.15s;
+}
+.menu-circle-btn:hover { transform: scale(1.05); }
+.menu-circle-btn span {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 2.4vh;
+  font-weight: 800;
+  color: #161608;
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* 정답 보이기/감추기 */
+.reveal-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 86%;
+}
+.reveal-wrap .reveal-text {
+  position: static;
+  transform: none;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.reveal-wrap.is-revealed .reveal-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.reveal-toggle-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  padding: 1.6vh 3.6vh;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 2.2vh;
+  font-weight: 700;
+  cursor: pointer;
+}
+.reveal-toggle-btn .reveal-label-hide { display: none; }
+.reveal-wrap.is-revealed ~ .reveal-toggle-btn .reveal-label-show { display: none; }
+.reveal-wrap.is-revealed ~ .reveal-toggle-btn .reveal-label-hide { display: inline; }
