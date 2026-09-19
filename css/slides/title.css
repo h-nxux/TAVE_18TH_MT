@@ -92,6 +92,21 @@
   height: 6vh;
 }
 
+/* 엔딩 슬라이드의 크레딧 박스 */
+.ending-credit {
+  position: absolute;
+  top: 76%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1.6vh 4vh;
+  white-space: nowrap;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 2.2vh;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #e0b45c;
+}
+
 /* 하단 대각선 점선 */
 .bottom-stripe {
   position: absolute;

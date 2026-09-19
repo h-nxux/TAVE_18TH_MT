@@ -126,6 +126,7 @@ html, body {
 .notch-tl { clip-path: polygon(3vh 0, 100% 0, 100% 100%, 0 100%, 0 3vh); }
 .notch-br { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vh), calc(100% - 3vh) 100%, 0 100%); }
 .notch-tr { clip-path: polygon(0 0, calc(100% - 3vh) 0, 100% 3vh, 100% 100%, 0 100%); }
+.notch-both { clip-path: polygon(3vh 0, 100% 0, 100% calc(100% - 3vh), calc(100% - 3vh) 100%, 0 100%, 0 3vh); }
 
 /* 금색으로 꽉 찬 패널 (예: 노래 퀴즈 재생 버튼 박스) - .panel(어두운 배경)과 반대 톤 */
 .panel-gold {

@@ -76,6 +76,17 @@ function renderExample(example) {
   `;
 }
 
+// 규칙 안내 박스 오른쪽 위에 "이번 라운드 1등/2등 점수"를 표시.
+function renderPoints(points) {
+  if (!points) return '';
+  return `
+    <div class="rules-points">
+      <span>이번 라운드 1등: <b>${points.first}점</b></span>
+      <span>2등: <b>${points.second}점</b></span>
+    </div>
+  `;
+}
+
 // media-box(재생 버튼)를 실제로 누르면 오디오가 재생/일시정지 되도록 연결.
 function wireMediaExample(el) {
   const mediaBox = el.querySelector('.media-box');
@@ -121,57 +132,98 @@ function renderBackButton(targetId) {
   `;
 }
 
+// 표지/엔딩 슬라이드가 공통으로 쓰는 상단 장식 바(쉐브론 + 트라페조이드 + 점 + 선).
+function renderSpaceTopBar() {
+  return `
+    <div class="top-bar">
+      <div class="chevrons left">
+        <svg viewBox="0 0 12 20"><polygon points="12,0 3,10 12,20 9,20 0,10 9,0" fill="#ffd977"/></svg>
+        <svg viewBox="0 0 12 20"><polygon points="12,0 3,10 12,20 9,20 0,10 9,0" fill="#ffd977"/></svg>
+        <svg viewBox="0 0 12 20"><polygon points="12,0 3,10 12,20 9,20 0,10 9,0" fill="#ffd977"/></svg>
+      </div>
+      <div class="top-trapezoid"></div>
+      <svg class="top-line left" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#d9ae55" stroke-width="1.4"/></svg>
+      <svg class="top-line right" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#d9ae55" stroke-width="1.4"/></svg>
+      <div class="top-dots"><span></span><span></span><span></span></div>
+      <div class="chevrons right">
+        <svg viewBox="0 0 12 20"><polygon points="0,0 9,10 0,20 3,20 12,10 3,0" fill="#ffd977"/></svg>
+        <svg viewBox="0 0 12 20"><polygon points="0,0 9,10 0,20 3,20 12,10 3,0" fill="#ffd977"/></svg>
+        <svg viewBox="0 0 12 20"><polygon points="0,0 9,10 0,20 3,20 12,10 3,0" fill="#ffd977"/></svg>
+      </div>
+    </div>
+  `;
+}
+
+// 표지/엔딩 슬라이드가 공통으로 쓰는 유성 아이콘.
+function renderShootStar() {
+  return `
+    <svg class="shoot-star" viewBox="0 0 300 100" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="starTrail" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#f6d67a" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#ffe9a8" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+      <line x1="0" y1="95" x2="260" y2="15" stroke="url(#starTrail)" stroke-width="4"/>
+      <g transform="translate(268,10)">
+        <path d="M12 0 L15 9 L24 12 L15 15 L12 24 L9 15 L0 12 L9 9 Z" fill="#ffe9a8"/>
+      </g>
+    </svg>
+  `;
+}
+
+// 표지/엔딩 슬라이드가 공통으로 쓰는 하단 대각선 점선.
+function renderBottomStripe() {
+  return `
+    <div class="bottom-stripe">
+      <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
+        <g stroke="#e0b45c" stroke-width="6">
+          ${Array.from({ length: 33 }, (_, i) => {
+            const x = -20 + i * 50;
+            return `<line x1="${x}" y1="40" x2="${x + 30}" y2="0"/>`;
+          }).join('')}
+        </g>
+      </svg>
+    </div>
+  `;
+}
+
 const TEMPLATES = {
 
-  /* ---------------- 표지 슬라이드 ---------------- */
+  /* ---------------- 표지형 슬라이드 (표지, 팀명 정하기, 채점 중 등 재사용) ---------------- */
   title(data) {
     const el = document.createElement('div');
     el.className = 'slide';
+    if (data.cornerId) el.dataset.corner = data.cornerId; // 상단 바로가기 메뉴가 이 값으로 찾아옴
     el.innerHTML = `
       <div class="s1-deco">
-        <div class="top-bar">
-          <div class="chevrons left">
-            <svg viewBox="0 0 12 20"><polygon points="12,0 3,10 12,20 9,20 0,10 9,0" fill="#ffd977"/></svg>
-            <svg viewBox="0 0 12 20"><polygon points="12,0 3,10 12,20 9,20 0,10 9,0" fill="#ffd977"/></svg>
-            <svg viewBox="0 0 12 20"><polygon points="12,0 3,10 12,20 9,20 0,10 9,0" fill="#ffd977"/></svg>
-          </div>
-          <div class="top-trapezoid"></div>
-          <svg class="top-line left" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#d9ae55" stroke-width="1.4"/></svg>
-          <svg class="top-line right" viewBox="0 0 100 2" preserveAspectRatio="none"><line x1="0" y1="1" x2="100" y2="1" stroke="#d9ae55" stroke-width="1.4"/></svg>
-          <div class="top-dots"><span></span><span></span><span></span></div>
-          <div class="chevrons right">
-            <svg viewBox="0 0 12 20"><polygon points="0,0 9,10 0,20 3,20 12,10 3,0" fill="#ffd977"/></svg>
-            <svg viewBox="0 0 12 20"><polygon points="0,0 9,10 0,20 3,20 12,10 3,0" fill="#ffd977"/></svg>
-            <svg viewBox="0 0 12 20"><polygon points="0,0 9,10 0,20 3,20 12,10 3,0" fill="#ffd977"/></svg>
-          </div>
-        </div>
-
-        <svg class="shoot-star" viewBox="0 0 300 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="starTrail" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f6d67a" stop-opacity="0"/>
-              <stop offset="100%" stop-color="#ffe9a8" stop-opacity="1"/>
-            </linearGradient>
-          </defs>
-          <line x1="0" y1="95" x2="260" y2="15" stroke="url(#starTrail)" stroke-width="4"/>
-          <g transform="translate(268,10)">
-            <path d="M12 0 L15 9 L24 12 L15 15 L12 24 L9 15 L0 12 L9 9 Z" fill="#ffe9a8"/>
-          </g>
-        </svg>
+        ${renderSpaceTopBar()}
+        ${renderShootStar()}
 
         <div class="s1-title"><span class="grad-outline">${data.subtitle}</span></div>
         <div class="s1-main"><span class="grad-outline">${data.title}</span></div>
 
-        <div class="bottom-stripe">
-          <svg viewBox="0 0 1600 40" preserveAspectRatio="none">
-            <g stroke="#e0b45c" stroke-width="6">
-              ${Array.from({ length: 33 }, (_, i) => {
-                const x = -20 + i * 50;
-                return `<line x1="${x}" y1="40" x2="${x + 30}" y2="0"/>`;
-              }).join('')}
-            </g>
-          </svg>
-        </div>
+        ${renderBottomStripe()}
+      </div>
+    `;
+    return el;
+  },
+
+  /* ---------------- 엔딩 슬라이드 ---------------- */
+  ending(data) {
+    const el = document.createElement('div');
+    el.className = 'slide';
+    if (data.cornerId) el.dataset.corner = data.cornerId; // 상단 바로가기 메뉴가 이 값으로 찾아옴
+    el.innerHTML = `
+      <div class="s1-deco">
+        ${renderSpaceTopBar()}
+        ${renderShootStar()}
+
+        <div class="s1-title"><span class="grad-outline">${data.subtitle}</span></div>
+        <div class="s1-main"><span class="grad-outline">${data.title}</span></div>
+        <div class="panel notch-both ending-credit">${data.credit}</div>
+
+        ${renderBottomStripe()}
       </div>
     `;
     return el;
@@ -191,6 +243,7 @@ const TEMPLATES = {
       ${renderHeader(data)}
 
       <div class="panel notch-tl rules-panel">
+        ${renderPoints(data.points)}
         <div class="rules-title">${data.rulesTitle || '규칙 안내'}</div>
         <ul class="rules-list">${rulesHtml}</ul>
       </div>
@@ -229,17 +282,22 @@ const TEMPLATES = {
       { key: '1s', label: '1초' },
       { key: '3s', label: '3초' },
       { key: '5s', label: '5초' },
+      { key: '10s', label: '정답', isAnswer: true }, // 하이라이트(정답 공개)용 버튼
     ];
     const clipsHtml = clipDefs
       .filter(c => clips[c.key])
       .map(c => `
-        <button class="song-clip-btn" type="button" aria-label="${c.label} 재생">
+        <button class="song-clip-btn${c.isAnswer ? ' song-clip-btn--answer' : ''}" type="button" aria-label="${c.label} 재생">
           <audio class="song-clip-audio" src="${clips[c.key]}" preload="none"></audio>
-          <svg class="song-clip-icon" viewBox="0 0 24 24">
-            <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#161608"/>
-            <path d="M16.2 8.2a5.2 5.2 0 010 7.6" stroke="#161608" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M19 5.5a9.2 9.2 0 010 13" stroke="#161608" stroke-width="2" fill="none" stroke-linecap="round"/>
-          </svg>
+          ${c.isAnswer ? `
+            <svg class="song-clip-icon" viewBox="0 0 24 24"><path d="M12 2 L14.7 9 L22 9.5 L16.3 14.2 L18.2 21.5 L12 17.3 L5.8 21.5 L7.7 14.2 L2 9.5 L9.3 9 Z" fill="#161608"/></svg>
+          ` : `
+            <svg class="song-clip-icon" viewBox="0 0 24 24">
+              <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#161608"/>
+              <path d="M16.2 8.2a5.2 5.2 0 010 7.6" stroke="#161608" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M19 5.5a9.2 9.2 0 010 13" stroke="#161608" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          `}
           <span class="song-clip-label">${c.label}</span>
         </button>
       `)

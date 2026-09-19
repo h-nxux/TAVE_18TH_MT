@@ -20,6 +20,7 @@ const CORNERS = [
   { id: 'four-letter-quiz', label: '네글자 퀴즈' },
   { id: 'overlap-object-quiz', label: '안숨은그림찾기' },
   { id: 'draw-quiz', label: '이어그리기 퀴즈' },
+  { id: 'ending', label: '엔딩' },
 ];
 
 // 인물 퀴즈 "사진 페이지 + 정답 페이지" 한 세트를 만들어주는 함수.
@@ -31,9 +32,10 @@ function personQuizSet(number, imagePath, answer) {
   ];
 }
 
-// 노래 퀴즈 "문제(1초/3초/5초 재생 버튼) 페이지 + 정답 페이지" 한 세트를 만들어주는 함수.
+// 노래 퀴즈 "문제(1초/3초/5초/정답 재생 버튼) 페이지 + 정답 페이지" 한 세트를 만들어주는 함수.
 // 번호와 정답("가수 - 제목")만 넣으면 두 장이 자동으로 생성되고,
 // mp3 경로는 image/1초노래퀴즈/clip_숫자_길이.mp3 형식으로 알아서 맞춰짐.
+// 10s 파일은 하이라이트(정답 공개용) 버튼으로 쓰임.
 function songQuizSet(number, answer) {
   const n = String(number).padStart(2, '0');
   const base = `image/1초노래퀴즈/clip_${n}_`;
@@ -43,7 +45,7 @@ function songQuizSet(number, answer) {
       number,
       gameName: '1초 노래 퀴즈',
       badgeColor: '#16247d',
-      clips: { '1s': `${base}1s.mp3`, '3s': `${base}3s.mp3`, '5s': `${base}5s.mp3` },
+      clips: { '1s': `${base}1s.mp3`, '3s': `${base}3s.mp3`, '5s': `${base}5s.mp3`, '10s': `${base}10s.mp3` },
     },
     { type: 'quiz-answer', number, gameName: '1초 노래 퀴즈', badgeColor: '#16247d', answer },
   ];
@@ -99,6 +101,13 @@ const SLIDES = [
     title: 'TAVE MT',
   },
 
+  // ---------------- 1-1. 팀명 정하기 (표지 바로 다음) ----------------
+  {
+    type: 'title',
+    subtitle: '아주 사이좋게',
+    title: '팀명 정하기',
+  },
+
   // ---------------- 2. 게임 규칙 안내 예시 (인물 퀴즈) ----------------
   // 이 아래 객체를 복사 & 붙여넣기 해서 게임마다 규칙 페이지를 계속 추가하면 됩니다.
   {
@@ -107,6 +116,7 @@ const SLIDES = [
     gameName: '인물 퀴즈',       // 흰색 말풍선에 들어가는 게임 이름
     badgeColor: '#16247d',       // 게임 이름 글자 색 (원하면 게임마다 다르게 지정 가능)
     rulesTitle: '규칙 안내',
+    points: { first: 4, second: 2 },   // 이번 라운드 1등/2등 점수 (규칙 화면 오른쪽 위에 표시됨)
     rules: [
       '다양한 종류의 인물 사진(이목구비, 과거 사진, 웃긴 짤, 그냥 사진 등)이 제시됩니다.',
       '제시된 인물의 정답을 아는 사람은 팀 구호를 크게 외칩니다.',
@@ -153,6 +163,7 @@ const SLIDES = [
     gameName: '1초 노래 퀴즈',
     badgeColor: '#16247d',
     rulesTitle: '규칙 안내',
+    points: { first: 4, second: 2 },
     rules: [
       '유명(?)곡의 첫 1초가 제시됩니다.',
       '제시된 노래의 정답을 아는 사람은 팀 구호를 크게 외칩니다. 지명되면 가수와 제목을 외칩니다. 가수와 제목을 맞힌 뒤 진행자가 "춤!"이라고 외치면 5초동안 춤을 춰야 합니다.',
@@ -189,6 +200,7 @@ const SLIDES = [
     gameName: '네글자 퀴즈',
     badgeColor: '#16247d',
     rulesTitle: '규칙 안내',
+    points: { first: 4, second: 2 },
     rules: [
       '팀별로 나와 일자로 출제자와 마주보는 위치에 착석합니다.',
       '출제자가 리듬에 맞추어 네글자 중 두글자를 말하면 곧바로 대답해야 합니다. (절거나 리듬보다 느려지면 실패로 간주)',
@@ -208,6 +220,7 @@ const SLIDES = [
     gameName: '안숨은그림찾기',
     badgeColor: '#16247d',
     rulesTitle: '규칙 안내',
+    points: { first: 6, second: 3 },
     rules: [
       '5개의 사물이 겹쳐진 사진이 제시됩니다.',
       '겹쳐진 사물 모두를 찾은 사람은 팀 구호를 크게 외칩니다. 지명되면 5개의 사물 이름을 모두 연달아 외칩니다.',
@@ -230,14 +243,21 @@ const SLIDES = [
   ...hiddenPictureSet(10, 'image/안숨은그림찾기/10.png', 'image/안숨은그림찾기/10_1.png'),
 
   // ---------------- 9. 게임 규칙 안내 (이어그리기 퀴즈) ----------------
-  // 내용은 아직 안 정해서 비워둠. 나중에 rules 배열에 문장을 채우면 됨 (다른 규칙 페이지와 동일한 형식).
   {
     type: 'rules',
     cornerId: 'draw-quiz',
     gameName: '이어그리기 퀴즈',
     badgeColor: '#16247d',
     rulesTitle: '규칙 안내',
-    rules: [],
+    points: { first: 7, second: 3 },
+    rules: [
+      '두 팀이 나와 등을 대고 각각 일렬로 앉습니다.',
+      '첫번째 주자가 동시에 제시어를 보고 3초동안 스케치북에 그림을 그립니다.',
+      '3초 뒤에는 바로 다음 주자에게 스케치북을 넘기고, 첫 번째 주자의 그림을 이어그립니다.',
+      '마지막 주자까지 반복한 뒤, 정답자에게 최종 그림을 전달합니다.',
+      '둘 중 먼저 구호를 외치고 정답을 맞히는 팀이 승리합니다.',
+      '토너먼트 형식으로 진행되며, 먼저 진행하는 팀부터 상의 하에 속담/영화 중 주제를 선택할 수 있습니다. 난이도는 완전 랜덤입니다.',
+    ],
   },
 
   // ---------------- 10. 이어그리기 퀴즈: 메인 메뉴 (영화 A / 영화 B / 속담 A / 속담 B) ----------------
@@ -271,5 +291,22 @@ const SLIDES = [
     '지렁이도 밟으면 꿈틀한다.',
     '가는 말이 고와야 오는 말이 곱다.',
   ]),
+
+  // ---------------- 11-1. 채점 중 (엔딩 바로 전) ----------------
+  // 상단 바로가기 메뉴의 "엔딩"은 이 페이지로 이동함. 여기서 다음으로 넘기면 THANK YOU 페이지가 나옴.
+  {
+    type: 'title',
+    cornerId: 'ending',       // 상단 바로가기 메뉴와 연결되는 id (CORNERS 목록과 맞춰야 함)
+    subtitle: '매우 다급하게',
+    title: '채점 중입니다',
+  },
+
+  // ---------------- 12. 엔딩 슬라이드 ----------------
+  {
+    type: 'ending',
+    subtitle: '참여해주셔서 감사합니다!',
+    title: 'THANK YOU',
+    credit: 'TAVE 18TH MT | MADE BY HYUNJIN :)',
+  },
 
 ];

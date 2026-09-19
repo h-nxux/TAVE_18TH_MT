@@ -31,6 +31,24 @@
   justify-content: center;
 }
 
+.rules-points {
+  position: absolute;
+  top: 2.4vh;
+  right: 3vh;
+  display: flex;
+  gap: 1.6vh;
+  padding: 0.9vh 1.8vh;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 214, 102, 0.75);
+  background: rgba(4, 8, 24, 0.55);
+  color: #ffe6a3;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-size: 1.7vh;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.rules-points b { color: #ffd977; font-weight: 800; }
+
 .rules-title {
   font-size: 4.2vh;
   font-weight: 700;
