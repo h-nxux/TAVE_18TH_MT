@@ -16,7 +16,7 @@
   position: absolute;
   top: 2.6vh;
   left: 3.2vh;
-  font-size: 2.6vh;
+  font-size: 3vh;
   font-weight: 700;
   color: #f2f2f2;
   font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
@@ -51,7 +51,7 @@
   width: 86%;
   font-family: 'PyeongChangPeace', sans-serif;
   font-weight: 700;
-  font-size: 9vh;
+  font-size: 9.4vh;
   color: #dcb354;
   text-shadow: 0 0.05em 0.05em rgba(0, 0, 0, 0.5);
   text-align: center;
@@ -70,8 +70,8 @@
 }
 
 .song-clip-btn {
-  width: 16vh;
-  height: 16vh;
+  width: 17.5vh;
+  height: 17.5vh;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -97,11 +97,11 @@
   box-shadow: 0 0 0 0.5vh rgba(255, 140, 100, 0.55), 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
-.song-clip-icon { width: 5.4vh; height: 5.4vh; }
+.song-clip-icon { width: 5.8vh; height: 5.8vh; }
 
 .song-clip-label {
   font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-  font-size: 2.2vh;
+  font-size: 2.6vh;
   font-weight: 800;
   color: #161608;
 }
